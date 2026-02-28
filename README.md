@@ -1,6 +1,9 @@
-# MiniAngular19
+## Mini-Angular19 project
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.19.
+This is a mini project repo on angular 19 to try new feature angular which came after 16+.
+
+## feature like : 
+@if , @for, @Switch, Signals, Zoneless etc
 
 ## Development server
 
