@@ -1,1 +1,11 @@
-<p>task-form works!</p>
+<div class="p-5 max-w-md">
+    <h2>Add New Tasks</h2>
+    <form [formGroup]="taskForm" (ngSubmit)="submit()">
+        <input type="text" formControlName = "title" placeholder="Enter Task ..." class="w-full p-2">
+        <div *ngIf="taskForm.controls.title.touched && taskForm.controls.title.invalid" class="text-red-700 mt-1.5">
+            Task Must Be at least 3 Characters
+        </div>
+
+        <button type="submit" class="mt-2.5">Add Task</button>
+    </form>
+</div>

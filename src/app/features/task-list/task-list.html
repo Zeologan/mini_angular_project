@@ -1,10 +1,24 @@
 <div class="p-5">
     <h2>Task List</h2>
+    <!-- search bar  -->
 
-    <div *ngFor="let task of getTasks() ; trackBy : trackById" class="mb-3 p-3 border border-[#ccc] flex justify-between">
+    <div class="p-5 flex justify-between">
+        <input type="text" placeholder="Search task..." [(ngModel)]="searchText" class="p-1.5 mb-2.5">
+        <div class="">
+            <button class="bg-red-300 hover:bg-red-400 rounded px-2 py-1  ml-1 " (click)="filter='all'">All</button>
+            <button class="bg-green-300 hover:bg-green-400 rounded px-2 py-1  ml-1 "
+                (click)="filter='active'">Active</button>
+            <button class="bg-blue-300 hover:bg-blue-400 rounded px-2 py-1  ml-1 "
+                (click)="filter='completed'">Completed</button>
+        </div>
+    </div>
+
+    <div *ngFor="let task of (filteredTasks | filter:filter) ; trackBy : trackById"
+        class="mb-3 p-3 border border-[#ccc] flex justify-between">
         <input class="mr-2" type="checkbox" [checked]="task.completed" (change)="toggle(task.id)">
-        <span [style.text-decoration] = "task.completed ? 'line-through' : 'none'">{{task.title}}</span>
+        <span [style.text-decoration]="task.completed ? 'line-through' : 'none'">{{task.title}}</span>
 
-        <button (click)="delete(task.id)" class="float-right bg-red-300 p-1 rounded cursor-pointer hover:bg-red-200 transition-all">Delele</button>
+        <button (click)="delete(task.id)"
+            class="float-right bg-red-300 p-1 rounded cursor-pointer hover:bg-red-200 transition-all">Delele</button>
     </div>
 </div>

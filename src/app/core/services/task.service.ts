@@ -12,19 +12,35 @@ export class TaskService {
   private todoUrl = 'https://jsonplaceholder.typicode.com/todos?_limit=10';
 
   loadTasks(){
-    this.http.get<Task[]>(this.todoUrl)
-    .subscribe({
-      next: (data) => this.tasks.set(data),
-      error: (err) => console.error('Error loading tasks', err) 
-    });
+    const stored = localStorage.getItem('tasks');
+
+    if(stored){
+      this.tasks.set(JSON.parse(stored));
+      return;
+    }
+
+    this.http.get<Task[]>(this.todoUrl).subscribe(data => {
+      this.tasks.set(data);
+      localStorage.setItem('tasks', JSON.stringify(data));
+    })
   }
 
   addTask(task : Task){
-    this.tasks.update(current => [task, ...current]);
+    // this.tasks.update(current => [task, ...current]);
+    this.tasks.update(current => {
+      const updated = [task, ...current];
+      localStorage.setItem('tasks', JSON.stringify(updated));
+      return updated;
+    })
   }
 
   deleteTask(id: number){
-    this.tasks.update(current => current.filter(t => t.id !== id));
+    // this.tasks.update(current => current.filter(t => t.id !== id));
+    this.tasks.update(current => {
+      const updated = current.filter(t => t.id !== id);
+      localStorage.setItem('tasks', JSON.stringify(updated));
+      return updated;
+    });
   }
 
   toggleTask(id : number){
